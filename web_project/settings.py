@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -29,9 +29,7 @@ DEBUG = True
 # a specific host, you must also add 'localhost' and/or '127.0.0.1' for local
 # debugging (which are enabled by default when ALLOWED_HOSTS is empty.)
 ALLOWED_HOSTS = [
-    #'localhost',
-    #'127.0.0.1'
-    #'vscode-django-tutorial.azurewebsites.net'  # Sample name only!
+'*'
 ]
 
 # Application definition
@@ -79,13 +77,21 @@ WSGI_APPLICATION = 'web_project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+print(os.environ.get('MYSQL_DATABASE', '12wee'))
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ.get('MYSQL_DATABASE', 'mysql_db'),
+        'USER': os.environ.get('MYSQL_USER', 'mysql_user'),
+        'PASSWORD': os.environ.get('MYSQL_PASSWORD', 'F{<9w)k~H7'),
+        'HOST': os.environ.get('MYSQL_DATABASE_HOST', 'mysql-db'),
+        'PORT': os.environ.get('MYSQL_DATABASE_PORT', 3306),
+        'OPTIONS': {
+            'auth_plugin': 'mysql_native_password'
+        }
     }
-}
+}   
 
 
 # Password validation
